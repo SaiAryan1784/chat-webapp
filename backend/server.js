@@ -1,22 +1,23 @@
 const express = require('express');
+const cors = require('cors'); // Added cors
 const app = express();
 const { createServer } = require('http');
 const server = createServer(app);
 
 const { Server } = require("socket.io");
 
-const PORT =  5174;
+const PORT = process.env.PORT || 5174; // Use process.env.PORT in production
 
-const Frontend_url = 'https://chat-webapp-lm6eflamg-saiaryan1784s-projects.vercel.app'
+const Frontend_url = 'https://chat-webapp-lm6eflamg-saiaryan1784s-projects.vercel.app';
 
 app.use(cors({
-    origin: Frontend_url || "http://localhost:5173", // Adjust to the actual frontend URL in production
+    origin: Frontend_url || "http://localhost:5173", // Adjust for production or development
 }));
 
 const io = new Server(server, {
     cors: {
         origin: Frontend_url || "http://localhost:5173",
-        methods: ["GET", "POST"] // Update the CORS origin if needed
+        methods: ["GET", "POST"], // Allow CORS for GET and POST requests
     }
 });
 

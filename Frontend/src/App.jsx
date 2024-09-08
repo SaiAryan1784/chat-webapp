@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import io from "socket.io-client";
 import { v4 } from 'uuid';
 
-const BACKEND_URL = 'https://vercel.com/saiaryan1784s-projects/chat-webapp-backend/7yH4cUbXX9ZRits2SMjtE2eMoE31'
+// Use environment variables or hardcoded URLs
+const BACKEND_URL = 'https://vercel.com/saiaryan1784s-projects/chat-webapp-backend/94RnQZo42rx9rVT93Z6qUCK7i6og'; // Replace with the actual backend URL
 
 const PORT = 5174;
-const socket = io(  BACKEND_URL || `http://localhost:${PORT}`);
+const socket = io(BACKEND_URL || `http://localhost:${PORT}`);
 
 const App = () => {
   const [isConnected, setIsConnected] = useState(socket.connected);
