@@ -8,12 +8,12 @@ const { Server } = require("socket.io");
 const FRONTEND_URL = 'https://chat-webapp-khaki.vercel.app';
 
 app.use(cors({
-    origin: FRONTEND_URL
+    origin: '*'
 }));
 
 const io = new Server(server, {
     cors: {
-        origin: FRONTEND_URL,
+        origin: '*',
         methods: ["GET", "POST"],
     }
 });
