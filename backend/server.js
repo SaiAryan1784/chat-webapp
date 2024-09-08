@@ -4,11 +4,19 @@ const { createServer } = require('http');
 const server = createServer(app);
 
 const { Server } = require("socket.io");
-const PORT = 5174;
+
+const PORT =  5174;
+
+const Frontend_url = 'https://chat-webapp-lm6eflamg-saiaryan1784s-projects.vercel.app'
+
+app.use(cors({
+    origin: Frontend_url || "http://localhost:5173", // Adjust to the actual frontend URL in production
+}));
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5173", // Update the CORS origin if needed
+        origin: Frontend_url || "http://localhost:5173",
+        methods: ["GET", "POST"] // Update the CORS origin if needed
     }
 });
 
