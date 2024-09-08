@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import io from "socket.io-client";
-import { v4 } from 'uuid';
 
-// Use environment variables or hardcoded URLs
-const BACKEND_URL = 'https://chat-webapp-backend-theta.vercel.app/'; // Replace with the actual backend URL
+const BACKEND_URL = 'https://chat-webapp-backend-theta.vercel.app'; // Replace with your actual backend URL
 
-const PORT = 5174;
-const socket = io(BACKEND_URL || `http://localhost:${PORT}`);
+const socket = io(BACKEND_URL);
 
 const App = () => {
   const [isConnected, setIsConnected] = useState(socket.connected);
@@ -17,7 +14,6 @@ const App = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    console.log('connected:', socket.connected);
     socket.on('connect', () => {
       setIsConnected(true);
     });
@@ -31,21 +27,20 @@ const App = () => {
   }, [isConnected]);
 
   useEffect(() => {
-    // When a message is received from the server, add it to the messages list
     socket.on("receive_msg", ({ user, message, color }) => {
-      const msg = { user, message, color }; // Store user, message, and color as an object
-      setMessages((prevState) => [msg, ...prevState]); // Add it to the messages state
+      const msg = { user, message, color };
+      setMessages((prevState) => [msg, ...prevState]);
     });
     
     return () => {
-      socket.off("receive_msg"); // Clean up the event listener
+      socket.off("receive_msg");
     };
   }, []);
 
   const handleEnterChatRoom = () => {
     if (user !== "" && room !== "") {
       setChatIsVisible(true);
-      const userColor = getRandomColor(); // Assign a random color to the user
+      const userColor = getRandomColor();
       socket.emit("join_room", { user, room, color: userColor });
     }
   };
@@ -57,12 +52,11 @@ const App = () => {
         user,
         message: newMessage,
       };
-      socket.emit("send_msg", newMsgData); // Send message to server
-      setNewMessage(""); // Clear input after sending message
+      socket.emit("send_msg", newMsgData);
+      setNewMessage("");
     }
   };
 
-  // Helper function to get a random color
   const getRandomColor = () => {
     const colors = ["red", "green", "blue", "purple", "orange", "pink"];
     return colors[Math.floor(Math.random() * colors.length)];
