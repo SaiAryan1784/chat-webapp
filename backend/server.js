@@ -8,7 +8,7 @@ const { Server } = require("socket.io");
 
 const PORT = process.env.PORT || 5174; // Use process.env.PORT in production
 
-const Frontend_url = 'https://chat-webapp-lm6eflamg-saiaryan1784s-projects.vercel.app';
+const Frontend_url = 'https://chat-webapp-khaki.vercel.app/';
 
 app.use(cors({
     origin: Frontend_url || "http://localhost:5173", // Adjust for production or development
